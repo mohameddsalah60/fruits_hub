@@ -14,7 +14,7 @@ class FruitHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: OnGenerateRoute,
+      onGenerateRoute: onGenerateRoute,
       initialRoute: SplashView.routeName,
     );
   }
