@@ -59,7 +59,7 @@ class PageViewItem extends StatelessWidget {
           height: 24,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 37),
+          padding: const EdgeInsets.symmetric(horizontal: 45),
           child: Text(
             subTitle,
             textAlign: TextAlign.center,
