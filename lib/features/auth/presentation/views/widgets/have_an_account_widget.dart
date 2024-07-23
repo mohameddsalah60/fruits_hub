@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_hub/core/utils/app_colors.dart';
 import 'package:fruits_hub/core/utils/app_text_styles.dart';
-import 'package:fruits_hub/features/auth/presentation/views/login_view.dart';
 
 class HaveAnAccountWidget extends StatelessWidget {
   const HaveAnAccountWidget({
@@ -21,7 +20,7 @@ class HaveAnAccountWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(LoginView.routeName);
+            Navigator.of(context).pop();
           },
           child: Text(
             'تسجيل دخول',
