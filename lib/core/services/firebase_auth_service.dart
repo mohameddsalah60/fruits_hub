@@ -4,6 +4,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_hub/core/errors/exceptions.dart';
 
 class FirebaseAuthService {
+  Future<User> loginUserWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return credential.user!;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw CustomException(message: 'هذا الحساب غير موجود.');
+      } else if (e.code == 'wrong-password') {
+        throw CustomException(message: 'الرقم السري خطأ.');
+      } else if (e.code == 'invalid-email') {
+        throw CustomException(message: 'يرجي ادخال ايميل صحيح.');
+      } else {
+        throw CustomException(
+            message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+      }
+    } catch (e) {
+      log("Exception in FirebaseAuthService.loginUserWithEmailAndPassword: ${e.toString()}");
+
+      throw CustomException(
+          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+    }
+  }
+
   Future<User> createUserWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
