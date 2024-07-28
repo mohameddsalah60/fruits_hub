@@ -7,14 +7,23 @@ class CustomTextFromField extends StatelessWidget {
       required this.hintText,
       this.keyboardType,
       this.suffixIcon,
-      this.obscureText = false});
+      this.obscureText = false,
+      this.onSaved});
   final String hintText;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
   final bool obscureText;
+  final void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      onSaved: onSaved,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'هذا الحقل مطلوب';
+        }
+        return null;
+      },
       keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(

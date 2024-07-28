@@ -22,6 +22,8 @@ class FirebaseAuthService {
             message: 'لقد قمت بالتسجيل مسبقاً. الرجاء تسجيل الدخول.');
       } else if (e.code == 'network-request-failed') {
         throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
+      } else if (e.code == 'invalid-email') {
+        throw CustomException(message: 'يرجي ادخال ايميل صحيح.');
       } else {
         throw CustomException(
             message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');

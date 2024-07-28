@@ -1,57 +1,127 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fruits_hub/core/helper_functions/custom_snack_bar.dart';
 import 'package:fruits_hub/core/widgets/custom_button.dart';
 import 'package:fruits_hub/core/widgets/custom_text_field.dart';
+import 'package:fruits_hub/features/auth/presentation/cubits/signup_cubits/signup_cubit.dart';
 
 import 'have_an_account_widget.dart';
 import 'terms_and_condition_widget.dart';
 
-class SignUpViewBody extends StatelessWidget {
+class SignUpViewBody extends StatefulWidget {
   const SignUpViewBody({super.key});
 
   @override
+  State<SignUpViewBody> createState() => _SignUpViewBodyState();
+}
+
+class _SignUpViewBodyState extends State<SignUpViewBody> {
+  final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  late String userName, email, password;
+  bool isVisible = true;
+  bool value = false;
+  @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 24,
-              ),
-              CustomTextFromField(
-                hintText: 'الاسم كامل',
-                keyboardType: TextInputType.name,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              CustomTextFromField(
-                hintText: 'البريد الإلكتروني',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              CustomTextFromField(
-                hintText: 'كلمة المرور',
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                suffixIcon: Icon(Icons.remove_red_eye),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TermsAndConditionWidget(),
-              SizedBox(
-                height: 30,
-              ),
-              CustomButton(text: 'إنشاء حساب جديد'),
-              SizedBox(
-                height: 26,
-              ),
-              HaveAnAccountWidget(),
-            ],
+          child: Form(
+            key: fromKey,
+            autovalidateMode: autovalidateMode,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 24,
+                ),
+                CustomTextFromField(
+                  hintText: 'الاسم كامل',
+                  keyboardType: TextInputType.name,
+                  onSaved: (value) {
+                    userName = value!;
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                CustomTextFromField(
+                  onSaved: (value) {
+                    email = value!;
+                  },
+                  hintText: 'البريد الإلكتروني',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                CustomTextFromField(
+                  onSaved: (value) {
+                    password = value!;
+                  },
+                  hintText: 'كلمة المرور',
+                  obscureText: isVisible,
+                  keyboardType: TextInputType.visiblePassword,
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        if (isVisible) {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        } else {
+                          setState(() {
+                            isVisible = true;
+                          });
+                        }
+                      },
+                      icon: const Icon(Icons.remove_red_eye)),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TermsAndConditionWidget(
+                  onChanged: (val) {
+                    setState(() {
+                      value = val!;
+                    });
+                  },
+                  value: value,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomButton(
+                  text: 'إنشاء حساب جديد',
+                  onPressed: () {
+                    if (fromKey.currentState!.validate()) {
+                      if (value) {
+                        fromKey.currentState!.save();
+                        context
+                            .read<SignupCubit>()
+                            .createUserWithEmailAndPassword(
+                              email,
+                              password,
+                              userName,
+                            );
+                      } else {
+                        customSnackBar(
+                          context,
+                          text: 'يجب الموافقه على الشروط والاحكام',
+                        );
+                      }
+                    } else {
+                      setState(() {
+                        autovalidateMode = AutovalidateMode.always;
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 26,
+                ),
+                const HaveAnAccountWidget(),
+              ],
+            ),
           ),
         ),
       ),

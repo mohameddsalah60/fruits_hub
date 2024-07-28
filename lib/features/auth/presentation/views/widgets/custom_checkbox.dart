@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_hub/core/utils/app_colors.dart';
 
-class CustomCheckbox extends StatefulWidget {
+class CustomCheckbox extends StatelessWidget {
   const CustomCheckbox({
     super.key,
+    required this.onChanged,
+    required this.value,
   });
-
-  @override
-  State<CustomCheckbox> createState() => _CustomCheckboxState();
-}
-
-class _CustomCheckboxState extends State<CustomCheckbox> {
-  bool value = false;
+  final bool value;
+  final void Function(bool?) onChanged;
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(
         value: value,
-        onChanged: (val) {
-          value = val!;
-          setState(() {});
-        },
+        onChanged: onChanged,
         activeColor: AppColors.primaryColor,
         side: const BorderSide(width: 1.5, color: Color(0xffDDDFDF)),
         shape: RoundedRectangleBorder(
