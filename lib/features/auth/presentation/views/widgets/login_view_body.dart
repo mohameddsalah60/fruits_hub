@@ -4,6 +4,7 @@ import 'package:fruits_hub/core/utils/app_colors.dart';
 import 'package:fruits_hub/core/utils/app_images.dart';
 import 'package:fruits_hub/core/utils/app_text_styles.dart';
 import 'package:fruits_hub/core/widgets/custom_button.dart';
+import 'package:fruits_hub/core/widgets/custom_password_field.dart';
 import 'package:fruits_hub/core/widgets/custom_text_field.dart';
 import 'package:fruits_hub/features/auth/presentation/cubits/login_cubits/login_cubit.dart';
 
@@ -22,7 +23,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String email, password;
-  bool isVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -46,23 +47,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 const SizedBox(
                   height: 16,
                 ),
-                CustomTextFromField(
-                  hintText: 'كلمة المرور',
-                  keyboardType: TextInputType.visiblePassword,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        if (isVisible) {
-                          setState(() {
-                            isVisible = false;
-                          });
-                        } else {
-                          setState(() {
-                            isVisible = true;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.remove_red_eye)),
-                  obscureText: isVisible,
+                CustomPasswordField(
                   onSaved: (value) {
                     password = value!;
                   },

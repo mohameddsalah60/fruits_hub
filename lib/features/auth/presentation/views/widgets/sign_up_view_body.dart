@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/core/helper_functions/custom_snack_bar.dart';
 import 'package:fruits_hub/core/widgets/custom_button.dart';
+import 'package:fruits_hub/core/widgets/custom_password_field.dart';
 import 'package:fruits_hub/core/widgets/custom_text_field.dart';
 import 'package:fruits_hub/features/auth/presentation/cubits/signup_cubits/signup_cubit.dart';
 
@@ -19,8 +20,8 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String userName, email, password;
-  bool isVisible = true;
-  bool value = false;
+
+  bool valueCheckBox = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -55,26 +56,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                 const SizedBox(
                   height: 16,
                 ),
-                CustomTextFromField(
+                CustomPasswordField(
                   onSaved: (value) {
                     password = value!;
                   },
-                  hintText: 'كلمة المرور',
-                  obscureText: isVisible,
-                  keyboardType: TextInputType.visiblePassword,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        if (isVisible) {
-                          setState(() {
-                            isVisible = false;
-                          });
-                        } else {
-                          setState(() {
-                            isVisible = true;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.remove_red_eye)),
                 ),
                 const SizedBox(
                   height: 16,
@@ -82,10 +67,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                 TermsAndConditionWidget(
                   onChanged: (val) {
                     setState(() {
-                      value = val!;
+                      valueCheckBox = val!;
                     });
                   },
-                  value: value,
+                  value: valueCheckBox,
                 ),
                 const SizedBox(
                   height: 30,
@@ -94,7 +79,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                   text: 'إنشاء حساب جديد',
                   onPressed: () {
                     if (fromKey.currentState!.validate()) {
-                      if (value) {
+                      if (valueCheckBox) {
                         fromKey.currentState!.save();
                         context
                             .read<SignupCubit>()
