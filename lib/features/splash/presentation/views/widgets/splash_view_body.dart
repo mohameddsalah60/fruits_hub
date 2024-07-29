@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fruits_hub/constants.dart';
 import 'package:fruits_hub/core/services/shared_preferences_singletone.dart';
 import 'package:fruits_hub/core/utils/app_images.dart';
-import 'package:fruits_hub/features/auth/presentation/views/login_view.dart';
+import 'package:fruits_hub/features/auth/presentation/views/signin_view.dart';
 import 'package:fruits_hub/features/on_boarding/presentation/views/on_boarding_view.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -47,7 +47,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       const Duration(seconds: 3),
       () {
         if (isOnBoardingViewSeen) {
-          Navigator.pushReplacementNamed(context, LoginView.routeName);
+          Navigator.pushReplacementNamed(context, SignInView.routeName);
         } else {
           Navigator.pushReplacementNamed(context, OnBoardingView.routeName);
         }

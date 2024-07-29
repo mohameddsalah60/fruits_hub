@@ -4,21 +4,21 @@ import 'package:fruits_hub/features/auth/domain/repos/auth_repo.dart';
 
 part 'login_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class SignInCubit extends Cubit<SignInState> {
   final AuthRepo authRepo;
-  LoginCubit(this.authRepo) : super(LoginInitial());
+  SignInCubit(this.authRepo) : super(LoginInitial());
   Future<void> loginUserWithEmailAndPassword(
       {required String email, required String password}) async {
-    emit(LoginLoading());
+    emit(SignInLoading());
 
     final result =
         await authRepo.loginUserWithEmailAndPassword(email, password);
     result.fold(
       (failure) {
-        emit(LoginFailure(message: failure.errMessage));
+        emit(SignInFailure(message: failure.errMessage));
       },
       (user) {
-        emit(LoginSuccess(userEntity: user));
+        emit(SignInSuccess(userEntity: user));
       },
     );
   }

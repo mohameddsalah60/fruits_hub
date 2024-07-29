@@ -1,19 +1,19 @@
 part of 'login_cubit.dart';
 
-class LoginState {}
+class SignInState {}
 
-final class LoginInitial extends LoginState {}
+final class LoginInitial extends SignInState {}
 
-final class LoginLoading extends LoginState {}
+final class SignInLoading extends SignInState {}
 
-final class LoginSuccess extends LoginState {
+final class SignInSuccess extends SignInState {
   final UserEntity userEntity;
 
-  LoginSuccess({required this.userEntity});
+  SignInSuccess({required this.userEntity});
 }
 
-final class LoginFailure extends LoginState {
+final class SignInFailure extends SignInState {
   final String message;
 
-  LoginFailure({required this.message});
+  SignInFailure({required this.message});
 }

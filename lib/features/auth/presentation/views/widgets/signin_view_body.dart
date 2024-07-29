@@ -10,16 +10,16 @@ import 'package:fruits_hub/features/auth/presentation/cubits/login_cubits/login_
 
 import 'dont_have_an_account_widget.dart';
 import 'or_divider.dart';
-import 'social_login_button.dart';
+import 'social_signin_button.dart';
 
-class LoginViewBody extends StatefulWidget {
-  const LoginViewBody({super.key});
+class SignInViewBody extends StatefulWidget {
+  const SignInViewBody({super.key});
 
   @override
-  State<LoginViewBody> createState() => _LoginViewBodyState();
+  State<SignInViewBody> createState() => _SignInViewBodyState();
 }
 
-class _LoginViewBodyState extends State<LoginViewBody> {
+class _SignInViewBodyState extends State<SignInViewBody> {
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String email, password;
@@ -74,7 +74,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   onPressed: () {
                     if (fromKey.currentState!.validate()) {
                       fromKey.currentState!.save();
-                      context.read<LoginCubit>().loginUserWithEmailAndPassword(
+                      context.read<SignInCubit>().loginUserWithEmailAndPassword(
                             email: email,
                             password: password,
                           );
@@ -96,21 +96,21 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 const SizedBox(
                   height: 16,
                 ),
-                const SocialLoginButton(
+                const SocialSignInButton(
                   text: 'تسجيل بواسطة جوجل',
                   img: Assets.imagesGoogleIcon,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                const SocialLoginButton(
+                const SocialSignInButton(
                   text: 'تسجيل بواسطة أبل',
                   img: Assets.imagesAppleIcon,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                const SocialLoginButton(
+                const SocialSignInButton(
                   text: 'تسجيل بواسطة فيسبوك',
                   img: Assets.imagesFacebookIcon,
                 ),

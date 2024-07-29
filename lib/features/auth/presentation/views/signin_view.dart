@@ -5,18 +5,18 @@ import 'package:fruits_hub/core/widgets/custom_app_bar.dart';
 import 'package:fruits_hub/features/auth/domain/repos/auth_repo.dart';
 import 'package:fruits_hub/features/auth/presentation/cubits/login_cubits/login_cubit.dart';
 
-import 'widgets/login_view_body_bloc_consumer.dart';
+import 'widgets/signin_view_body_bloc_consumer.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
-  static const routeName = 'login';
+class SignInView extends StatelessWidget {
+  const SignInView({super.key});
+  static const routeName = 'signIn';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(getIt<AuthRepo>()),
+      create: (context) => SignInCubit(getIt<AuthRepo>()),
       child: Scaffold(
         appBar: buildAppBar(context, title: 'تسجيل دخول'),
-        body: const LoginViewBodyBlocConsumer(),
+        body: const SignInViewBodyBlocConsumer(),
       ),
     );
   }

@@ -12,11 +12,15 @@ class FirebaseAuthService {
       return credential.user!;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw CustomException(message: 'هذا الحساب غير موجود.');
+        throw CustomException(
+            message: 'البريد الالكتروانى او الرقم السري خطأ.');
       } else if (e.code == 'wrong-password') {
-        throw CustomException(message: 'الرقم السري خطأ.');
+        throw CustomException(
+            message: 'البريد الالكتروانى او الرقم السري خطأ.');
       } else if (e.code == 'invalid-email') {
         throw CustomException(message: 'يرجي ادخال ايميل صحيح.');
+      } else if (e.code == 'network-request-failed') {
+        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
       } else {
         throw CustomException(
             message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
