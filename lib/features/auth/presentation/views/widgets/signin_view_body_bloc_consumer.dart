@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/core/helper_functions/custom_snack_bar.dart';
 import 'package:fruits_hub/core/widgets/custom_progress_hud.dart';
-import 'package:fruits_hub/features/auth/presentation/cubits/login_cubits/login_cubit.dart';
+import 'package:fruits_hub/features/auth/presentation/cubits/signin_cubits/signin_cubit.dart';
 
 import 'signin_view_body.dart';
 

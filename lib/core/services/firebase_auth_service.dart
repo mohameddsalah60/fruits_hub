@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_hub/core/errors/exceptions.dart';
 
 class FirebaseAuthService {
-  Future<User> loginUserWithEmailAndPassword(
+  Future<User> signinUserWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       final credential = await FirebaseAuth.instance
@@ -26,7 +26,7 @@ class FirebaseAuthService {
             message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
       }
     } catch (e) {
-      log("Exception in FirebaseAuthService.loginUserWithEmailAndPassword: ${e.toString()}");
+      log("Exception in FirebaseAuthService.signinUserWithEmailAndPassword: ${e.toString()}");
 
       throw CustomException(
           message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');

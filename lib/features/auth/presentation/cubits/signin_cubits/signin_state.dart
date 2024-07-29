@@ -1,8 +1,8 @@
-part of 'login_cubit.dart';
+part of 'signin_cubit.dart';
 
 class SignInState {}
 
-final class LoginInitial extends SignInState {}
+final class SignInInitial extends SignInState {}
 
 final class SignInLoading extends SignInState {}
 

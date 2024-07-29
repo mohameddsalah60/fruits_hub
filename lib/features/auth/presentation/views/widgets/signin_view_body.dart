@@ -6,7 +6,7 @@ import 'package:fruits_hub/core/utils/app_text_styles.dart';
 import 'package:fruits_hub/core/widgets/custom_button.dart';
 import 'package:fruits_hub/core/widgets/custom_password_field.dart';
 import 'package:fruits_hub/core/widgets/custom_text_field.dart';
-import 'package:fruits_hub/features/auth/presentation/cubits/login_cubits/login_cubit.dart';
+import 'package:fruits_hub/features/auth/presentation/cubits/signin_cubits/signin_cubit.dart';
 
 import 'dont_have_an_account_widget.dart';
 import 'or_divider.dart';
@@ -74,7 +74,9 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                   onPressed: () {
                     if (fromKey.currentState!.validate()) {
                       fromKey.currentState!.save();
-                      context.read<SignInCubit>().loginUserWithEmailAndPassword(
+                      context
+                          .read<SignInCubit>()
+                          .signinUserWithEmailAndPassword(
                             email: email,
                             password: password,
                           );
