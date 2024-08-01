@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fruits_hub/core/errors/exceptions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -66,17 +67,63 @@ class FirebaseAuthService {
     }
   }
 
-  Future<User> signinUserWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<User?> signinUserWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        return null;
+      }
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      return (await FirebaseAuth.instance.signInWithCredential(credential))
+          .user!;
+    } on FirebaseAuthException catch (e) {
+      log("Exception in FirebaseAuthService.signinUserWithGoogle e code: ${e.code}");
+      if (e.code.contains('Null')) {
+        throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
+      }
+      throw CustomException(
+          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+    } catch (e) {
+      log("Exception in FirebaseAuthService.signinUserWithGoogle: ${e.toString()}");
 
-    return (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
+      throw CustomException(
+          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+    }
+  }
+
+  Future<User?> signInWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      if (loginResult.accessToken == null) {
+        return null;
+      }
+
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+      final credential = await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+
+      return credential.user;
+    } on FirebaseAuthException catch (e) {
+      log("Exception in FirebaseAuthService.signInWithFacebook e code: ${e.code}");
+      if (e.code.contains('Null')) {
+        throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
+      }
+      throw CustomException(
+          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+    } catch (e) {
+      log("Exception in FirebaseAuthService.signInWithFacebook : ${e.toString()}");
+
+      throw CustomException(
+          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+    }
   }
 }
