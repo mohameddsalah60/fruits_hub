@@ -87,6 +87,8 @@ class FirebaseAuthService {
       log("Exception in FirebaseAuthService.signinUserWithGoogle e code: ${e.code}");
       if (e.code.contains('Null')) {
         throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
+      } else if (e.code == 'network-request-failed') {
+        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
       }
       throw CustomException(
           message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
@@ -116,6 +118,11 @@ class FirebaseAuthService {
       log("Exception in FirebaseAuthService.signInWithFacebook e code: ${e.code}");
       if (e.code.contains('Null')) {
         throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
+      }
+      if (e.code == 'user-disabled') {
+        throw CustomException(message: 'حسابك محظور من قبل الادمن.');
+      } else if (e.code == 'network-request-failed') {
+        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
       }
       throw CustomException(
           message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');

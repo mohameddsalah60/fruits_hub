@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/core/services/get_it_service.dart';
@@ -15,7 +17,11 @@ class SignInView extends StatelessWidget {
     return BlocProvider(
       create: (context) => SignInCubit(getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: buildAppBar(context, title: 'تسجيل دخول'),
+        appBar: buildAppBar(
+          context,
+          title: 'تسجيل دخول',
+          onTap: () => exit(0),
+        ),
         body: const SignInViewBodyBlocConsumer(),
       ),
     );

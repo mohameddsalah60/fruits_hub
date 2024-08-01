@@ -108,13 +108,6 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                 const SizedBox(
                   height: 16,
                 ),
-                const SocialSignInButton(
-                  text: 'تسجيل بواسطة أبل',
-                  img: Assets.imagesAppleIcon,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
                 SocialSignInButton(
                   text: 'تسجيل بواسطة فيسبوك',
                   img: Assets.imagesFacebookIcon,
