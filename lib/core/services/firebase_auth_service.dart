@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:fruits_hub/core/errors/errors_messages.dart';
 import 'package:fruits_hub/core/errors/exceptions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -13,25 +14,12 @@ class FirebaseAuthService {
           .signInWithEmailAndPassword(email: email, password: password);
       return credential.user!;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw CustomException(
-            message: 'البريد الالكتروانى او الرقم السري خطأ.');
-      } else if (e.code == 'wrong-password') {
-        throw CustomException(
-            message: 'البريد الالكتروانى او الرقم السري خطأ.');
-      } else if (e.code == 'invalid-email') {
-        throw CustomException(message: 'يرجي ادخال ايميل صحيح.');
-      } else if (e.code == 'network-request-failed') {
-        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
-      } else {
-        throw CustomException(
-            message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
-      }
+      throw CustomException(
+          message: ErrorsMessages.getFirebaseErrorMessage(e.code));
     } catch (e) {
       log("Exception in FirebaseAuthService.signinUserWithEmailAndPassword: ${e.toString()}");
 
-      throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+      throw CustomException(message: ErrorsMessages.genericErrorMessage);
     }
   }
 
@@ -46,24 +34,12 @@ class FirebaseAuthService {
       return credential.user!;
     } on FirebaseAuthException catch (e) {
       log("Exception in FirebaseAuthService.createUserWithEmailAndPassword: ${e.toString()} and code is ${e.code}");
-      if (e.code == 'weak-password') {
-        throw CustomException(message: 'الرقم السري ضعيف جداً.');
-      } else if (e.code == 'email-already-in-use') {
-        throw CustomException(
-            message: 'لقد قمت بالتسجيل مسبقاً. الرجاء تسجيل الدخول.');
-      } else if (e.code == 'network-request-failed') {
-        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
-      } else if (e.code == 'invalid-email') {
-        throw CustomException(message: 'يرجي ادخال ايميل صحيح.');
-      } else {
-        throw CustomException(
-            message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
-      }
+      throw CustomException(
+          message: ErrorsMessages.getFirebaseErrorMessage(e.code));
     } catch (e) {
       log("Exception in FirebaseAuthService.createUserWithEmailAndPassword: ${e.toString()}");
 
-      throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+      throw CustomException(message: ErrorsMessages.genericErrorMessage);
     }
   }
 
@@ -86,17 +62,14 @@ class FirebaseAuthService {
     } on FirebaseAuthException catch (e) {
       log("Exception in FirebaseAuthService.signinUserWithGoogle e code: ${e.code}");
       if (e.code.contains('Null')) {
-        throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
-      } else if (e.code == 'network-request-failed') {
-        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
+        throw CustomException(message: ErrorsMessages.cancellationMessage);
       }
       throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+          message: ErrorsMessages.getFirebaseErrorMessage(e.code));
     } catch (e) {
       log("Exception in FirebaseAuthService.signinUserWithGoogle: ${e.toString()}");
 
-      throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+      throw CustomException(message: ErrorsMessages.genericErrorMessage);
     }
   }
 
@@ -117,20 +90,14 @@ class FirebaseAuthService {
     } on FirebaseAuthException catch (e) {
       log("Exception in FirebaseAuthService.signInWithFacebook e code: ${e.code}");
       if (e.code.contains('Null')) {
-        throw CustomException(message: 'تم إلغاء عملية تسجيل الدخول.');
-      }
-      if (e.code == 'user-disabled') {
-        throw CustomException(message: 'حسابك محظور من قبل الادمن.');
-      } else if (e.code == 'network-request-failed') {
-        throw CustomException(message: 'تاكد من اتصالك بالانترنت.');
+        throw CustomException(message: ErrorsMessages.cancellationMessage);
       }
       throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+          message: ErrorsMessages.getFirebaseErrorMessage(e.code));
     } catch (e) {
       log("Exception in FirebaseAuthService.signInWithFacebook : ${e.toString()}");
 
-      throw CustomException(
-          message: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.');
+      throw CustomException(message: ErrorsMessages.genericErrorMessage);
     }
   }
 }

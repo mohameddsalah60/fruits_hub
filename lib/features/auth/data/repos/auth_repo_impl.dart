@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:fruits_hub/core/errors/errors_messages.dart';
 import 'package:fruits_hub/core/errors/exceptions.dart';
 import 'package:fruits_hub/core/errors/failures.dart';
 import 'package:fruits_hub/core/services/firebase_auth_service.dart';
@@ -21,7 +22,7 @@ class AuthRepoImpl extends AuthRepo {
       return left(ServerFailure(errMessage: e.message));
     } catch (e) {
       return left(
-        ServerFailure(errMessage: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.'),
+        ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)),
       );
     }
   }
@@ -37,7 +38,7 @@ class AuthRepoImpl extends AuthRepo {
       return left(ServerFailure(errMessage: e.message));
     } catch (e) {
       return left(
-        ServerFailure(errMessage: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.'),
+        ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)),
       );
     }
   }
@@ -47,12 +48,13 @@ class AuthRepoImpl extends AuthRepo {
     try {
       var user = await firebaseAuthService.signinUserWithGoogle();
       if (user == null) {
-        return left(ServerFailure(errMessage: 'تم إلغاء عملية تسجيل الدخول.'));
+        return left(
+            ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
       return right(UserModel.fromFirebaseUser(user));
     } catch (e) {
       return left(
-        ServerFailure(errMessage: 'لقد حدث خطأ ما. الرجاء المحاولة مرة اخرى.'),
+        ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)),
       );
     }
   }
@@ -63,15 +65,15 @@ class AuthRepoImpl extends AuthRepo {
       var user = await firebaseAuthService.signInWithFacebook();
 
       if (user == null) {
-        return left(ServerFailure(errMessage: 'user == null'));
+        return left(
+            ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
 
       return right(UserModel.fromFirebaseUser(user));
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.toString()));
     } catch (e) {
-      return left(
-          ServerFailure(errMessage: 'لقد حدث خطأ. الرجاء المحاولة مرة أخرى.'));
+      return left(ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)));
     }
   }
 }
