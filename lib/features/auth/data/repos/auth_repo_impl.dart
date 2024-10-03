@@ -22,11 +22,14 @@ class AuthRepoImpl extends AuthRepo {
     try {
       user = await firebaseAuthService.createUserWithEmailAndPassword(
           email: email, password: password);
-      await addUserData(user: UserModel.fromFirebaseUser(user));
-      print(
-          "createUserWithEmailAndPassword AuthRepoImpl name:${user.displayName}");
+      var userEntity = UserEntity(
+        name: name,
+        email: email,
+        uId: user.uid,
+      );
+      await addUserData(user: userEntity);
 
-      return right(UserModel.fromFirebaseUser(user));
+      return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.message));
     } catch (e) {
@@ -57,14 +60,18 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failures, UserEntity>> signinUserWithGoogle() async {
+    User? user;
     try {
-      var user = await firebaseAuthService.signinUserWithGoogle();
+      user = await firebaseAuthService.signinUserWithGoogle();
       if (user == null) {
         return left(
             ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
-      return right(UserModel.fromFirebaseUser(user));
+      var userEntity = UserModel.fromFirebaseUser(user);
+      await addUserData(user: userEntity);
+      return right(userEntity);
     } catch (e) {
+      await firebaseAuthService.deleteUser();
       return left(
         ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)),
       );
@@ -73,18 +80,21 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failures, UserEntity>> signinUserWithFacebook() async {
+    User? user;
     try {
-      var user = await firebaseAuthService.signInWithFacebook();
+      user = await firebaseAuthService.signInWithFacebook();
 
       if (user == null) {
         return left(
             ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
-
-      return right(UserModel.fromFirebaseUser(user));
+      var userEntity = UserModel.fromFirebaseUser(user);
+      await addUserData(user: userEntity);
+      return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.toString()));
     } catch (e) {
+      await firebaseAuthService.deleteUser();
       return left(ServerFailure(errMessage: ErrorsMessages.getErrorMessage(e)));
     }
   }
