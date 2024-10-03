@@ -18,7 +18,7 @@ class SignInViewBodyBlocConsumer extends StatelessWidget {
         if (state is SignInFailure) {
           customSnackBar(context, text: state.message);
         } else if (state is SignInSuccess) {
-          customSnackBar(context, text: state.userEntity.uId);
+          customSnackBar(context, text: 'تم تسجيل الدخول بنجاح.....');
         }
       },
       builder: (context, state) {

@@ -1,7 +1,7 @@
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_alert_dialog_loading.dart';
+import 'custom_alert_dialog.dart';
 
 class CustomProgressHud extends StatelessWidget {
   const CustomProgressHud(
@@ -11,7 +11,10 @@ class CustomProgressHud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
-      progressIndicator: const AlertDialogLoading(),
+      progressIndicator: const CustomAlertDialog(
+        text: "جاري التحميل ...",
+        isLoading: true,
+      ),
       inAsyncCall: isLoading,
       child: child,
     );

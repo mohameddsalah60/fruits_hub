@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:fruits_hub/core/utils/app_text_styles.dart';
+import 'package:fruits_hub/core/widgets/custom_alert_dialog.dart';
 
-customSnackBar(context, {required String text, Color? color}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: color ?? Colors.red.shade400,
-      content: Text(
-        text,
-        style: TextStyles.regular16,
-      ),
-    ),
+void customSnackBar(BuildContext context, {required String text}) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CustomAlertDialog(
+        text: text,
+      );
+    },
   );
+
+  Future.delayed(const Duration(seconds: 2), () {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  });
 }
