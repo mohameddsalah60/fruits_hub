@@ -30,9 +30,12 @@ class CustomAlertDialog extends StatelessWidget {
           const SizedBox(
             width: 24,
           ),
-          Text(
-            text,
-            style: TextStyles.regular16,
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyles.regular16,
+              maxLines: 2,
+            ),
           ),
         ],
       ),
