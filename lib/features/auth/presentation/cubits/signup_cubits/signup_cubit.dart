@@ -21,7 +21,6 @@ class SignupCubit extends Cubit<SignupState> {
       },
       (userEntity) {
         emit(SignupSuccess(userEntity: userEntity));
-        print("createUserWithEmailAndPasswordCubit name:$name");
       },
     );
   }
