@@ -70,7 +70,13 @@ class AuthRepoImpl extends AuthRepo {
             ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
       var userEntity = UserModel.fromFirebaseUser(user);
-      await addUserData(user: userEntity);
+      var isUserExist = await databaseService.checkIfDataExists(
+          path: 'users', docId: user.uid);
+      if (isUserExist) {
+        await getUserData(uId: user.uid);
+      } else {
+        await addUserData(user: userEntity);
+      }
       return right(userEntity);
     } catch (e) {
       await firebaseAuthService.deleteUser();
@@ -91,7 +97,13 @@ class AuthRepoImpl extends AuthRepo {
             ServerFailure(errMessage: ErrorsMessages.cancellationMessage));
       }
       var userEntity = UserModel.fromFirebaseUser(user);
-      await addUserData(user: userEntity);
+      var isUserExist = await databaseService.checkIfDataExists(
+          path: 'users', docId: user.uid);
+      if (isUserExist) {
+        await getUserData(uId: user.uid);
+      } else {
+        await addUserData(user: userEntity);
+      }
       return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.toString()));
