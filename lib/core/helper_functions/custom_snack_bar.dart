@@ -12,8 +12,10 @@ void customSnackBar(BuildContext context, {required String text}) {
   );
 
   Future.delayed(const Duration(seconds: 2), () {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
+    if (context.mounted) {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
     }
   });
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/core/helper_functions/custom_snack_bar.dart';
 import 'package:fruits_hub/core/widgets/custom_progress_hud.dart';
+import 'package:fruits_hub/features/home/presentation/home_view.dart';
 
 import '../../cubits/signup_cubits/signup_cubit.dart';
 import 'sign_up_view_body.dart';
@@ -21,7 +22,7 @@ class SignupViewBodyBlocConsumer extends StatelessWidget {
             text: state.message,
           );
         } else if (state is SignupSuccess) {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed(HomeView.routeName);
         }
       },
       builder: (context, state) {

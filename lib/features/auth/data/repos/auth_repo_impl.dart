@@ -30,7 +30,7 @@ class AuthRepoImpl extends AuthRepo {
       await addUserData(
         user: userEntity,
       );
-      return right(userEntity);
+      return right(await getUserData(uId: user.uid));
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.message));
     } catch (e) {
