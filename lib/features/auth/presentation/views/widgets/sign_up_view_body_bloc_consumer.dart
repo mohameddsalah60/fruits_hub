@@ -22,7 +22,10 @@ class SignupViewBodyBlocConsumer extends StatelessWidget {
             text: state.message,
           );
         } else if (state is SignupSuccess) {
-          Navigator.of(context).pushReplacementNamed(HomeView.routeName);
+          Navigator.of(context).pushReplacementNamed(
+            HomeView.routeName,
+            arguments: state.userEntity,
+          );
         }
       },
       builder: (context, state) {
