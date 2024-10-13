@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruits_hub/core/widgets/custom_fruit_item.dart';
 import 'package:fruits_hub/core/widgets/custom_search_textfield.dart';
 
 import 'best_selling_header.dart';
@@ -31,9 +32,10 @@ class HomeViewBody extends StatelessWidget {
                 ),
                 FeaturedBannerList(),
                 SizedBox(
-                  height: 12,
+                  height: 16,
                 ),
                 BestSellingHeader(),
+                CustomFruitItem(),
               ],
             )),
           ],

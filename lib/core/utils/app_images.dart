@@ -65,5 +65,9 @@ class Assets {
   /// Assets for imagesSplashBottom
   /// assets/images/splash_bottom.svg
   static const String imagesSplashBottom = "assets/images/splash_bottom.svg";
+
+  /// Assets for imagesStrwTest
+  /// assets/images/strw_test.png
+  static const String imagesStrwTest = "assets/images/strw_test.png";
 }
 
