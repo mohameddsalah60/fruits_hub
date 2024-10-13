@@ -12,7 +12,7 @@ class FeaturedBannerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
+      width: MediaQuery.sizeOf(context).width - 32,
       child: AspectRatio(
         aspectRatio: 342 / 158,
         child: Stack(

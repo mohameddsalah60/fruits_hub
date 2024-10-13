@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fruits_hub/core/widgets/custom_search_textfield.dart';
 
 import 'custom_home_appbar.dart';
-import 'featured_banner_item.dart';
+import 'featured_banner_list.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -28,7 +28,7 @@ class HomeViewBody extends StatelessWidget {
                 SizedBox(
                   height: 12,
                 ),
-                FeaturedBannerItem(),
+                FeaturedBannerList(),
               ],
             )),
           ],
