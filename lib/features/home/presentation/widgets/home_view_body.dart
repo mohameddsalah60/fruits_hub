@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fruits_hub/core/widgets/custom_fruit_item.dart';
+import 'package:fruits_hub/features/home/presentation/widgets/best_selling_gridview_fruits_items.dart';
 import 'package:fruits_hub/core/widgets/custom_search_textfield.dart';
 
 import 'best_selling_header.dart';
@@ -20,24 +20,28 @@ class HomeViewBody extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-                child: Column(
-              children: [
-                CustomHomeAppBar(),
-                SizedBox(
-                  height: 16,
-                ),
-                CustomSearchTextfield(),
-                SizedBox(
-                  height: 12,
-                ),
-                FeaturedBannerList(),
-                SizedBox(
-                  height: 16,
-                ),
-                BestSellingHeader(),
-                CustomFruitItem(),
-              ],
-            )),
+              child: Column(
+                children: [
+                  CustomHomeAppBar(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  CustomSearchTextfield(),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  FeaturedBannerList(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  BestSellingHeader(),
+                  SizedBox(
+                    height: 12,
+                  ),
+                ],
+              ),
+            ),
+            BestSellingGridView(),
           ],
         ),
       ),

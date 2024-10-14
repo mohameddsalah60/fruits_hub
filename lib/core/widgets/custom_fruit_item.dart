@@ -9,8 +9,6 @@ class CustomFruitItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      width: 200,
       decoration: const BoxDecoration(
         color: Color(0xffF3F5F7),
         borderRadius: BorderRadius.all(
@@ -45,30 +43,36 @@ class CustomFruitItem extends StatelessWidget {
                     style: TextStyles.semiBold13,
                   ),
                 ),
-                subtitle: Row(
-                  children: [
-                    Text(
-                      '30جنية /',
-                      style: TextStyles.bold13.copyWith(
-                        color: const Color(0xffF4A91F),
+                subtitle: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    children: [
+                      Text(
+                        '30جنية /',
+                        style: TextStyles.bold13.copyWith(
+                          color: const Color(0xffF4A91F),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      'الكيلو',
-                      style: TextStyles.semiBold13.copyWith(
-                        color: const Color(0xffF8C76D),
+                      const SizedBox(
+                        width: 4,
                       ),
-                    ),
-                  ],
+                      Text(
+                        'الكيلو',
+                        style: TextStyles.semiBold13.copyWith(
+                          color: const Color(0xffF8C76D),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                trailing: const CircleAvatar(
-                  backgroundColor: AppColors.primaryColor,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
+                trailing: GestureDetector(
+                  onTap: () {},
+                  child: const CircleAvatar(
+                    backgroundColor: AppColors.primaryColor,
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
