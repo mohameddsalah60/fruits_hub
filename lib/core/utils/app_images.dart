@@ -26,6 +26,38 @@ class Assets {
   /// assets/images/google_icon.svg
   static const String imagesGoogleIcon = "assets/images/google_icon.svg";
 
+  /// Assets for imagesIconsBottomBoldHome
+  /// assets/images/icons_bottom_bold/home.svg
+  static const String imagesIconsBottomBoldHome = "assets/images/icons_bottom_bold/home.svg";
+
+  /// Assets for imagesIconsBottomBoldProducts
+  /// assets/images/icons_bottom_bold/products.svg
+  static const String imagesIconsBottomBoldProducts = "assets/images/icons_bottom_bold/products.svg";
+
+  /// Assets for imagesIconsBottomBoldShoppingCart
+  /// assets/images/icons_bottom_bold/shopping_cart.svg
+  static const String imagesIconsBottomBoldShoppingCart = "assets/images/icons_bottom_bold/shopping_cart.svg";
+
+  /// Assets for imagesIconsBottomBoldUser
+  /// assets/images/icons_bottom_bold/user.svg
+  static const String imagesIconsBottomBoldUser = "assets/images/icons_bottom_bold/user.svg";
+
+  /// Assets for imagesIconsBottomOutlineHome
+  /// assets/images/icons_bottom_outline/home.svg
+  static const String imagesIconsBottomOutlineHome = "assets/images/icons_bottom_outline/home.svg";
+
+  /// Assets for imagesIconsBottomOutlineProducts
+  /// assets/images/icons_bottom_outline/products.svg
+  static const String imagesIconsBottomOutlineProducts = "assets/images/icons_bottom_outline/products.svg";
+
+  /// Assets for imagesIconsBottomOutlineShoppingCart
+  /// assets/images/icons_bottom_outline/shopping_cart.svg
+  static const String imagesIconsBottomOutlineShoppingCart = "assets/images/icons_bottom_outline/shopping_cart.svg";
+
+  /// Assets for imagesIconsBottomOutlineUser
+  /// assets/images/icons_bottom_outline/user.svg
+  static const String imagesIconsBottomOutlineUser = "assets/images/icons_bottom_outline/user.svg";
+
   /// Assets for imagesLogo
   /// assets/images/logo.svg
   static const String imagesLogo = "assets/images/logo.svg";
