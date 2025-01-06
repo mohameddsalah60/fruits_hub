@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_hub/core/errors/errors_messages.dart';
@@ -5,9 +7,12 @@ import 'package:fruits_hub/core/errors/exceptions.dart';
 import 'package:fruits_hub/core/errors/failures.dart';
 import 'package:fruits_hub/core/services/database_service.dart';
 import 'package:fruits_hub/core/services/firebase_auth_service.dart';
+import 'package:fruits_hub/core/services/shared_preferences_singletone.dart';
 import 'package:fruits_hub/features/auth/data/models/user_model.dart';
 import 'package:fruits_hub/features/auth/domain/entites/user_entity.dart';
 import 'package:fruits_hub/features/auth/domain/repos/auth_repo.dart';
+
+import '../../../../constants.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final FirebaseAuthService firebaseAuthService;
@@ -30,6 +35,9 @@ class AuthRepoImpl extends AuthRepo {
       await addUserData(
         user: userEntity,
       );
+      await saveUserData(
+        user: userEntity,
+      );
       return right(await getUserData(uId: user.uid));
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.message));
@@ -50,6 +58,9 @@ class AuthRepoImpl extends AuthRepo {
       var user = await firebaseAuthService.signinUserWithEmailAndPassword(
           email: email, password: password);
       var userEntity = await getUserData(uId: user.uid);
+      await saveUserData(
+        user: userEntity,
+      );
       return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(errMessage: e.message));
@@ -74,8 +85,14 @@ class AuthRepoImpl extends AuthRepo {
           path: 'users', docId: user.uid);
       if (isUserExist) {
         await getUserData(uId: user.uid);
+        await saveUserData(
+          user: userEntity,
+        );
       } else {
         await addUserData(user: userEntity);
+        await saveUserData(
+          user: userEntity,
+        );
       }
       return right(userEntity);
     } catch (e) {
@@ -101,8 +118,14 @@ class AuthRepoImpl extends AuthRepo {
           path: 'users', docId: user.uid);
       if (isUserExist) {
         await getUserData(uId: user.uid);
+        await saveUserData(
+          user: userEntity,
+        );
       } else {
         await addUserData(user: userEntity);
+        await saveUserData(
+          user: userEntity,
+        );
       }
       return right(userEntity);
     } on CustomException catch (e) {
@@ -117,7 +140,7 @@ class AuthRepoImpl extends AuthRepo {
   Future addUserData({required UserEntity user}) async {
     await databaseService.addData(
       path: 'users',
-      data: user.toMap(),
+      data: UserModel.fromEntity(user).toMap(),
       docId: user.uId,
     );
   }
@@ -129,5 +152,11 @@ class AuthRepoImpl extends AuthRepo {
       docId: uId,
     );
     return UserModel.fromJson(data);
+  }
+
+  @override
+  Future saveUserData({required UserEntity user}) async {
+    var userData = jsonEncode(UserModel.fromEntity(user).toMap());
+    await Prefs.setString(kUserData, userData);
   }
 }

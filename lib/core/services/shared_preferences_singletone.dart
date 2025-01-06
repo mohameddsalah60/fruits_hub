@@ -11,8 +11,16 @@ abstract class Prefs {
     await sharedPreferences.setBool(key, bool);
   }
 
-  static bool getData(String key) {
+  static Future<void> setString(String key, String string) async {
+    await sharedPreferences.setString(key, string);
+  }
+
+  static bool getBool(String key) {
     return sharedPreferences.getBool(key) ?? false;
+  }
+
+  static String getString(String key) {
+    return sharedPreferences.getString(key) ?? '';
   }
 
   static Future<void> clearAllData() async {
