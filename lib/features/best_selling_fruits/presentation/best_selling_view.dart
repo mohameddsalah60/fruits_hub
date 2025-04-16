@@ -11,7 +11,7 @@ class BestSellingView extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(
         context,
-        title: 'الأكثر مبيعًا ',
+        title: 'الأكثر مبيعًا',
         actions: [
           const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
